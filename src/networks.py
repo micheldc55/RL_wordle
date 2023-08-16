@@ -1,5 +1,6 @@
 import torch.nn as nn
 
+
 class QNetwork(nn.Module):
     def __init__(self, input_size, output_size, hidden_dim):
         super(QNetwork, self).__init__()
@@ -8,6 +9,6 @@ class QNetwork(nn.Module):
         self.fc3 = nn.Linear(hidden_dim, output_size)
     
     def forward(self, x):
-        x = nn.ReLU(self.fc1(x))
-        x = nn.ReLU(self.fc2(x))
+        x = nn.functional.relu(self.fc1(x))
+        x = nn.functional.relu(self.fc2(x))
         return self.fc3(x)
