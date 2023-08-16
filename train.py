@@ -73,7 +73,11 @@ torch.save(agent.qnetwork.state_dict(), 'wordle_agent_model.pth')
 
 config = {
     'epsilon': agent.epsilon,
-    'word_pool': word_pool
+    'word_pool': word_pool, 
+    'input_size': input_size,
+    'hidden_dim': hidden_dim,
+    'word_pool': word_pool, 
+    'output_size': output_size
 }
 
 with open('data/agent_config.pkl', 'wb') as config_file:
