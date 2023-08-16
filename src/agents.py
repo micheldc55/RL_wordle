@@ -64,7 +64,7 @@ class WordleAgent:
         self.optimizer.step()
 
         # Optionally decay the epsilon
-        self.epsilon = max(self.epsilon * 0.99999, 0.1)
+        self.epsilon = max(self.epsilon * 0.998, 0.1)
 
     def load_agent(self, state_dict_path: str, config_path: str):
         self.qnetwork.load_state_dict(torch.load(state_dict_path))

@@ -73,5 +73,5 @@ if __name__ == "__main__":
     print(len(vocabulary))
     print(vocabulary[:10])
 
-    reduced_vocab = create_reduced_vocabulary(path_text, vocab_size=1000, random_state=42)
-    convert_list_to_vocab_text(reduced_vocab, "./data/reduced_vocab.txt")
+    reduced_vocab = create_reduced_vocabulary(path_text, vocab_size=100, random_state=42)
+    convert_list_to_vocab_text(reduced_vocab, "./data/very_reduced_vocab.txt")

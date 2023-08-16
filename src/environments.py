@@ -13,6 +13,7 @@ class WordleEnv:
         self.true_word = true_word or random.choice(self.word_pool)
         self.state = [0, 0, 1] * len(self.true_word)
         self.done = False
+        self.moves_taken = 0
         return self.state
 
     def encode_feedback(self, feedback):
@@ -61,7 +62,7 @@ class WordleEnv:
 
         win_condition = all([color == "Green" for color in feedback])
         
-        if win_condition or self.moves_taken >= 6:
+        if win_condition or self.moves_taken >= 5:
             self.done = True
 
         self.moves_taken += 1
@@ -74,7 +75,7 @@ class WordleEnv:
         # Assign rewards based on feedback
         for f in feedback:
             if f == "Green":
-                reward += 1
+                reward += 2
             elif f == "Yellow":
                 reward += 0.5
             # No need to check for "Gray" as its reward is 0
@@ -84,20 +85,34 @@ class WordleEnv:
 
         # Introduce a penalty if game is not done after 6 moves
         if self.moves_taken >= 5 and not self.done:
-            reward -= 5
+            reward -= 15
         else:
             win_condition = all([color == "Green" for color in feedback])
             if win_condition:
-                reward += 6
+                reward += 15
+                self.done = True
             
         return reward
 
 if __name__ == "__main__":
     test_env = WordleEnv(["hello", "world", "python", "computer", "science"], true_word="hello")
-    test_env.step("bratz")
-    test_env.step("bratz")
-    test_env.step("bratz")
-    test_env.step("bratz")
-    state, reward, done = test_env.step("bratz")
+    done = False
 
-    print(state, reward, done)
+    while not done:
+        word = input("Enter a word: ")
+        state, reward, done = test_env.step(word)
+        print(state, reward, done)
+    # state, reward, done = test_env.step("bratz")
+    # print(state, reward, done)
+    
+    # state, reward, done = test_env.step("bertz")
+    # print(state, reward, done)
+
+    # state, reward, done = test_env.step("hertz")
+    # print(state, reward, done)
+
+    # state, reward, done = test_env.step("hellz")
+    # print(state, reward, done)
+
+    # state, reward, done = test_env.step("hello")
+    # print(state, reward, done)

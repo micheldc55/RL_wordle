@@ -4,12 +4,13 @@ import pickle
 from src.vocabulary import parse_vocabulary
 from src.environments import WordleEnv
 from src.agents import WordleAgent
+from src.playing_game import reproduce_game
 
 
 # Parameters
 input_size = 15  # Change this if necessary based on the state representation
 hidden_dim = 128
-word_pool = parse_vocabulary("data/reduced_vocab.txt")
+word_pool = parse_vocabulary("data/very_reduced_vocab.txt")[:50]
 output_size = len(word_pool)  # Assuming word_pool contains all valid 5-letter words
 num_episodes = 100_000
 batch_size = 64
@@ -50,9 +51,21 @@ for episode in range(num_episodes):
 
         total_reward += reward
 
+
     # Print episode stats
     if episode % 1000 == 0:
+        print("==================================")
         print(f"Episode {episode}/{num_episodes} - Total Reward: {total_reward} - Epsilon: {agent.epsilon:.2f}")
+        print("\n")
+        print("Trying the model out...\n")
+
+        for i in range(3): 
+            print(f"Game: {i+1}")
+            score = reproduce_game(agent, env)
+            print(score)
+            print("\n")
+        
+        print("==================================")
 
 print("Training complete!")
 
