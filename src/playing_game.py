@@ -8,11 +8,13 @@ def reproduce_game(agent, env, verbose=True):
     total_reward = 0
 
     while not done:
-        action_word = agent.choose_action(state)
-        print(f"Env. before step: {env.done}")
-        next_state, reward, done = env.step(action_word)
-        print(f"Env. after step: {env.done}")
-        feedback = env.feedback_for_guess(action_word)
+        with torch.inference_mode():
+            agent.qnetwork.eval()
+            action_word = agent.choose_action(state)
+            print(f"Env. before step: {env.done}")
+            next_state, reward, done = env.step(action_word)
+            print(f"Env. after step: {env.done}")
+            feedback = env.feedback_for_guess(action_word)
 
         if verbose:
             print(f"True word: {env.true_word}")

@@ -18,12 +18,15 @@ output_size = saved_config['output_size']
 
 agent = WordleAgent(input_size, output_size, hidden_dim, word_pool)
 agent.load_agent('wordle_agent_model.pth', 'data/agent_config.pkl')
+agent.epsilon = 0.0
 
 env = WordleEnv(word_pool)
+print(word_pool)
 
-# Play the game
-for i in range(10):
-    print(f"Game: {i+1}")
-    score = reproduce_game(agent, env)
-    print(score)
-    print("\n")
+
+# # Play the game
+# for i in range(10):
+#     print(f"Game: {i+1}")
+#     score = reproduce_game(agent, env)
+#     print(score)
+#     print("\n")
